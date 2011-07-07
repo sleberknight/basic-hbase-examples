@@ -1,4 +1,4 @@
-package com.nearinfinity.explore.hbase.samples;
+package com.nearinfinity.explore.hbase.samples.basic;
 
 import java.util.Map;
 import java.util.NavigableMap;
