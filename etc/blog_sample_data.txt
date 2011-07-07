@@ -1,0 +1,43 @@
+# Create the table:
+create 'blog', 'info', 'content'
+
+# List tables:
+list
+
+# Describe blog table
+describe 'blog'
+
+# Run in HBase shell the following to add some data:
+
+put 'blog', '20090320162535', 'info:title', 'Document-oriented storage using CouchDB'
+put 'blog', '20090320162535', 'info:author', 'Bob Smith'
+put 'blog', '20090320162535', 'content:', 'CouchDB is a document-oriented...'
+put 'blog', '20090320162535', 'info:category', 'Persistence'
+
+put 'blog', '20090407145045', 'info:title', 'Intro to Bigtable'
+put 'blog', '20090407145045', 'info:author', 'John'
+put 'blog', '20090407145045', 'info:category', 'Persistence'
+put 'blog', '20090407145045', 'content:', 'Google Bigtable is...'
+put 'blog', '20090407145045', 'content:', 'Google\'s Bigtable is...'
+put 'blog', '20090407145045', 'info:author', 'John Doe'
+put 'blog', '20090407145045', 'info:category', 'Persistence'
+
+
+# Following commands retrieve data:
+
+get 'blog', '20090320162535'
+get 'blog', '20090320162535', { COLUMN => 'info:title' }
+get 'blog', '20090320162535', { COLUMN => [ 'info:title', 'info:author', 'info:category' ] }
+
+get 'blog', '20090407145045'
+get 'blog', '20090407145045', { COLUMN => 'info:author' }
+get 'blog', '20090407145045', { COLUMN => 'info:author', VERSIONS => 3 }
+get 'blog', '20090407145045', { COLUMN => 'content:', VERSIONS => 3 }
+
+# Do some scans
+
+scan 'blog', { LIMIT => 1 }
+scan 'blog', { STARTROW => '20090407145045' }
+scan 'blog', { STARTROW => '20090300', STOPROW => '20090400' }
+scan 'blog', { STARTROW => '20090300', STOPROW => '20090400', COLUMNS => 'info:' }
+scan 'blog', { STARTROW => '20090300', STOPROW => '20090500', COLUMNS => 'info:' }

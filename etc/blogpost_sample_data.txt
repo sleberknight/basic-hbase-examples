@@ -1,0 +1,29 @@
+From http://ole-martin.net/hbase-tutorial-for-beginners/
+
+Create the table:
+
+create 'blogposts', 'post', 'image' 
+
+Run in HBase shell the following to add some data:
+
+put 'blogposts', 'post1', 'post:title', 'Hello World'
+put 'blogposts', 'post1', 'post:author', 'The Author'
+put 'blogposts', 'post1', 'post:body', 'This is a blog post'
+put 'blogposts', 'post1', 'image:header', 'image1.jpg'
+put 'blogposts', 'post1', 'image:bodyimage', 'image2.jpg'
+
+put 'blogposts', 'post2', 'post:title', 'Another Post'
+put 'blogposts', 'post2', 'post:title', 'My Second Post'
+
+put 'blogposts', 'post1', 'post:body', 'This is an updated blog post'
+
+Following commands retrieve data:
+
+get 'blogposts', 'post1'
+get 'blogposts', 'post1', { COLUMN => 'post:title' }
+get 'blogposts', 'post1', { COLUMN => 'post:title', VERSIONS => 4 }
+get 'blogposts', 'post1', { COLUMNS => 'post:body', VERSIONS => 3 }
+
+get 'blogposts', 'post2'
+get 'blogposts', 'post2', { COLUMN => 'post:title' }
+get 'blogposts', 'post2', { COLUMN => 'post:title', VERSIONS => 4 }
