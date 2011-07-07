@@ -74,7 +74,7 @@ public class BulkLoadFakenamesData {
             put.add(CONTACTINFO_FAMILY, COUNTRY_QUALIFIER, dataMap.get("country"));
             put.add(CONTACTINFO_FAMILY, EMAIL_QUALIFIER, dataMap.get("email"));
             put.add(CONTACTINFO_FAMILY, TELEPHONE_QUALIFIER, dataMap.get("telephone"));
-            put.add(CREDITCARD_FAMILY, Bytes.toBytes(reformatCardExpiration(values[17])), dataMap.get("cardInfo"));
+            put.add(CREDITCARD_FAMILY, Bytes.toBytes(makeCreditCardQualifier(values)), dataMap.get("cardInfo"));
             table.put(put);
 
             if (currentRow % 1000 == 0) {
@@ -88,10 +88,12 @@ public class BulkLoadFakenamesData {
         table.close();  // ensures we flush cached commits and cleanup
     }
 
-    private static String reformatCardExpiration(String original) {
+    private static String makeCreditCardQualifier(String[] values) {
+        // <reformatted-expirationdate>-<cardnumber>
+
         // (m|mm)/yyyy --> yyyymm
-        String[] values = original.split("/");
-        return values[1] + StringUtils.leftPad(values[0], 2, '0');
+        String[] expirationDate = values[17].split("/");
+        return expirationDate[1] + StringUtils.leftPad(expirationDate[0], 2, '0') + "-" + values[15];
     }
 
     private static String reformatBirthdate(String original) {
@@ -101,6 +103,7 @@ public class BulkLoadFakenamesData {
     }
 
     private static String makeCreditCardInfo(String[] values) {
+        // cardtype,cardnumber,expiration,cvv2
         return String.format("%s,%s,%s,%s", values[14], values[15], values[17], values[16]);
     }
 
