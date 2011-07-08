@@ -14,7 +14,6 @@ public class ScanFakePeople {
 
     private static final byte[] ZERO = new byte[]{ 0x00 };
 
-    // TODO Do various scans, optionally using some filters
     public static void main(String[] args) throws Exception {
         Configuration conf = HBaseConfiguration.create();
         HTable table = new HTable(conf, "fakenames");
