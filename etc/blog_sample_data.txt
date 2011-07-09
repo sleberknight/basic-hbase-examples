@@ -41,3 +41,22 @@ scan 'blog', { STARTROW => '20110407145045' }
 scan 'blog', { STARTROW => '20110300', STOPROW => '20110400' }
 scan 'blog', { STARTROW => '20110300', STOPROW => '20110400', COLUMNS => 'info:' }
 scan 'blog', { STARTROW => '20110300', STOPROW => '20110500', COLUMNS => 'info:' }
+
+########################################################################################################
+
+# Better row key design...use reverse order timestamp to get the most recent posts first when scanning
+
+put 'blog', '9223370736202040807', 'info:title', 'Why use HBase?'
+put 'blog', '9223370736202040807', 'info:author', 'Jane Doe'
+put 'blog', '9223370736202040807', 'info:category', 'Persistence'
+put 'blog', '9223370736202040807', 'content:', 'HBase is a column-oriented...'
+
+put 'blog', '9223370734652530807', 'info:title', 'Intro to Bigtable'
+put 'blog', '9223370734652530807', 'info:author', 'John'
+put 'blog', '9223370734652530807', 'info:category', 'Persistence'
+put 'blog', '9223370734652530807', 'content:', 'Google Bigtable is...'
+put 'blog', '9223370734652530807', 'content:', 'Google\'s Bigtable is...'
+put 'blog', '9223370734652530807', 'info:author', 'John Doe'
+put 'blog', '9223370734652530807', 'info:category', 'Persistence'
+
+scan 'blog'
