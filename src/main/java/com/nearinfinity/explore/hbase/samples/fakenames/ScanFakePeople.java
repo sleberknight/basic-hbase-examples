@@ -64,5 +64,7 @@ public class ScanFakePeople {
         }
         System.out.printf("Scanned %d results\n", count);
         System.out.printf("Last row was %s\n", Bytes.toString(lastRowKeyOnPage));
+
+        table.close();
     }
 }

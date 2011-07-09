@@ -7,18 +7,29 @@ import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.KeyValue;
 import org.apache.hadoop.hbase.client.Get;
 import org.apache.hadoop.hbase.client.HTable;
+import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.util.Bytes;
 
-public class GetSomeFakePeople {
+public class CreateJohnDoeFakename {
 
-    private static final String TABS = "\t\t\t\t\t";
+    private static final String TABS = "\t\t\t\t";
 
     public static void main(String[] args) throws Exception {
         Configuration conf = HBaseConfiguration.create();
         HTable table = new HTable(conf, "fakenames");
 
-        Get get = new Get(Bytes.toBytes("cochran-julie-f-248495"));
+        byte[] rowKey = Bytes.toBytes("doe-john-m-12345");
+        Put put = new Put(rowKey);
+        put.add(Bytes.toBytes("personal"), Bytes.toBytes("givenName"), Bytes.toBytes("John"));
+        put.add(Bytes.toBytes("personal"), Bytes.toBytes("mi"), Bytes.toBytes("M"));
+        put.add(Bytes.toBytes("personal"), Bytes.toBytes("surame"), Bytes.toBytes("Doe"));
+        put.add(Bytes.toBytes("contactinfo"), Bytes.toBytes("email"), Bytes.toBytes("john.m.doe@gmail.com"));
+
+        table.put(put);
+        table.flushCommits();
+
+        Get get = new Get(rowKey);
         Result result = table.get(get);
         List<KeyValue> list = result.list();
         System.out.printf("ROW%s%sCOLUMN+CELL\n", TABS, TABS);
