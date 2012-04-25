@@ -10,7 +10,7 @@ public class GetCountersTester {
         Configuration conf = HBaseConfiguration.create();
         HTable table = new HTable(conf, "counters");
         long current = table.incrementColumnValue(Bytes.toBytes("20110705"), Bytes.toBytes("daily"),
-                Bytes.toBytes("hits"), 0L);
+                Bytes.toBytes("hits"), 1L);
         System.out.println("current = " + current);
     }
 }
