@@ -1,25 +1,25 @@
 package com.nearinfinity.explore.hbase.samples.fakenames;
 
-import java.nio.ByteBuffer;
-import java.util.List;
-import java.util.Random;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.hbase.Cell;
+import org.apache.hadoop.hbase.CellUtil;
 import org.apache.hadoop.hbase.HBaseConfiguration;
-import org.apache.hadoop.hbase.KeyValue;
 import org.apache.hadoop.hbase.client.Get;
 import org.apache.hadoop.hbase.client.HTable;
 import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.util.Bytes;
 
-import static com.nearinfinity.explore.hbase.samples.fakenames.FakenamesConstants.*;
+import java.util.List;
+import java.util.Random;
+
+import static com.nearinfinity.explore.hbase.samples.fakenames.FakenamesConstants.CREDITCARD_FAMILY;
 
 public class AddCreditCardsToFakePeople {
 
     private static Random rand = new Random(System.currentTimeMillis());
-    private static String[] expYears = {"2012", "2013", "2014", "2015", "2016"};
+    private static String[] expYears = {"2016", "2017", "2018", "2019", "2020"};
 
     public static void main(String[] args) throws Exception {
         Configuration conf = HBaseConfiguration.create();
@@ -42,11 +42,11 @@ public class AddCreditCardsToFakePeople {
         Get get = new Get(Bytes.toBytes("cochran-julie-f-248495"));
         get.addFamily(CREDITCARD_FAMILY);
         Result result = table.get(get);
-        List<KeyValue> keyValues = result.list();
-        for (KeyValue keyValue : keyValues) {
-            String columnQualifier = Bytes.toString(keyValue.getQualifier());
-            String columnValue = Bytes.toString(keyValue.getValue());
-            long columnTimestamp = keyValue.getTimestamp();
+        List<Cell> cells = result.listCells();
+        for (Cell cell : cells) {
+            String columnQualifier = Bytes.toString(CellUtil.cloneQualifier(cell));
+            String columnValue = Bytes.toString(CellUtil.cloneValue(cell));
+            long columnTimestamp = cell.getTimestamp();
             System.out.printf("column=%s:%s, timestamp=%d, value=%s\n",
                     Bytes.toString(CREDITCARD_FAMILY), columnQualifier, columnTimestamp, columnValue);
         }
@@ -60,7 +60,7 @@ public class AddCreditCardsToFakePeople {
     }
 
     private static String buildExpirationMonth() {
-        int month = rand.nextInt(13);
+        int month = rand.nextInt(12) + 1;
         return StringUtils.leftPad(String.valueOf(month), 2, '0');
     }
 

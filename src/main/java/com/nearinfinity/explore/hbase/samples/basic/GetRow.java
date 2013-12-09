@@ -1,15 +1,14 @@
 package com.nearinfinity.explore.hbase.samples.basic;
 
-import java.util.Map;
-import java.util.NavigableMap;
-
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseConfiguration;
-import org.apache.hadoop.hbase.KeyValue;
 import org.apache.hadoop.hbase.client.Get;
 import org.apache.hadoop.hbase.client.HTable;
 import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.util.Bytes;
+
+import java.util.Map;
+import java.util.NavigableMap;
 
 public class GetRow {
     public static void main(String[] args) throws Exception {

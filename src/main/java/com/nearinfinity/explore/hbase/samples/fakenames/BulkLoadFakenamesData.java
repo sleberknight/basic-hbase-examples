@@ -1,17 +1,17 @@
 package com.nearinfinity.explore.hbase.samples.fakenames;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.client.HTable;
 import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.util.Bytes;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.nearinfinity.explore.hbase.samples.fakenames.FakenamesConstants.*;
 
@@ -22,7 +22,7 @@ public class BulkLoadFakenamesData {
 
         Configuration conf = HBaseConfiguration.create();
         HTable table = new HTable(conf, "fakenames");
-        table.setAutoFlush(false);
+        table.setAutoFlush(false, true);
 
         int currentRow = 1;
         File dataFile = new File(dataFileName);

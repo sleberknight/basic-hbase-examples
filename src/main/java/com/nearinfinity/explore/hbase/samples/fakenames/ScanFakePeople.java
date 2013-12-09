@@ -1,17 +1,17 @@
 package com.nearinfinity.explore.hbase.samples.fakenames;
 
-import java.util.List;
-
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.hbase.Cell;
+import org.apache.hadoop.hbase.CellUtil;
 import org.apache.hadoop.hbase.HBaseConfiguration;
-import org.apache.hadoop.hbase.KeyValue;
 import org.apache.hadoop.hbase.client.HTable;
 import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.client.ResultScanner;
 import org.apache.hadoop.hbase.client.Scan;
-import org.apache.hadoop.hbase.filter.Filter;
 import org.apache.hadoop.hbase.filter.PageFilter;
 import org.apache.hadoop.hbase.util.Bytes;
+
+import java.util.List;
 
 public class ScanFakePeople {
 
@@ -49,15 +49,15 @@ public class ScanFakePeople {
         ResultScanner scanner = table.getScanner(scan);
         System.out.printf("ROW%s%sCOLUMN+CELL\n", TABS, TABS);
         for (Result result : scanner) {
-            List<KeyValue> list = result.list();
-            for (KeyValue keyValue : list) {
+            List<Cell> cells = result.listCells();
+            for (Cell cell : cells) {
                 System.out.printf("%s%scolumn=%s:%s, timestamp=%d, value=%s\n",
-                        Bytes.toString(keyValue.getRow()),
+                        Bytes.toString(CellUtil.cloneRow(cell)),
                         TABS,
-                        Bytes.toString(keyValue.getFamily()),
-                        Bytes.toString(keyValue.getQualifier()),
-                        keyValue.getTimestamp(),
-                        Bytes.toString(keyValue.getValue()));
+                        Bytes.toString(CellUtil.cloneFamily(cell)),
+                        Bytes.toString(CellUtil.cloneQualifier(cell)),
+                        cell.getTimestamp(),
+                        Bytes.toString(CellUtil.cloneValue(cell)));
             }
         }
 
