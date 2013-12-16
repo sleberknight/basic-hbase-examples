@@ -3,21 +3,22 @@ package com.nearinfinity.explore.hbase.samples.misc;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 public class MakeReverseOrderBlogTimestamps {
     public static void main(String[] args) throws Exception {
-        List<String> postDates = new ArrayList<String>() {{
-            add("20110320162535");
-            add("20110407145045");
-            add("20110423093020");
-            add("20110506134525");
-            add("20110615103825");
-            add("20110627162056");
-            add("20110707184035");
-        }};
+        List<String> postDates = Arrays.asList(
+                "20110320162535",
+                "20110407145045",
+                "20110423093020",
+                "20110506134525",
+                "20110615103825",
+                "20110627162056",
+                "20110707184035"
+        );
 
         List<Long> descOrderPostDates = new ArrayList<Long>(postDates.size());
         for (String postDate : postDates) {

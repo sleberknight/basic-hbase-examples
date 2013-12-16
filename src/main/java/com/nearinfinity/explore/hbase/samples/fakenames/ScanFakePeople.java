@@ -13,6 +13,7 @@ import org.apache.hadoop.hbase.util.Bytes;
 
 import java.util.List;
 
+// TODO Change so you can choose what to scan when you run this, i.e. using a simple menu choice.
 public class ScanFakePeople {
 
     private static final byte[] ZERO = new byte[]{ 0x00 };
