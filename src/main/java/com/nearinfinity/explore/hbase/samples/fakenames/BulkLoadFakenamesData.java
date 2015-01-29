@@ -18,7 +18,8 @@ import static com.nearinfinity.explore.hbase.samples.fakenames.FakenamesConstant
 public class BulkLoadFakenamesData {
 
     public static void main(String[] args) throws Exception {
-        String dataFileName = "/data/fakenames/fakenames-0.csv";
+//        String dataFileName = "/data/fakenames/fakenames-0.csv";
+        String dataFileName = "etc/fakenames-sample-1000.csv";
 
         Configuration conf = HBaseConfiguration.create();
         HTable table = new HTable(conf, "fakenames");

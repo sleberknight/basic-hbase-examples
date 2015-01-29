@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.nearinfinity</groupId>
+  <artifactId>hbase-dsl</artifactId>
+  <versioning>
+    <versions>
+      <version>0.1.3-SNAPSHOT</version>
+    </versions>
+    <lastUpdated>20131106043240</lastUpdated>
+  </versioning>
+</metadata>
